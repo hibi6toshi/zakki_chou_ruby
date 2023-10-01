@@ -1,0 +1,38 @@
+# 具体的な値を設定
+some_value = { :b => 23, :c => 10 }  # ハッシュ
+large_array = [:a, :b, :c, :d, :e]   # 配列
+some_value2 = some_value.dup
+large_array2 = large_array.dup
+
+# コードを実行前の値
+puts "実行前の値:"
+puts "some_value: #{some_value.inspect}"
+puts "large_array: #{large_array.inspect}"
+
+# コードの実行
+hash1 = some_value.to_hash
+large_array.each do |value|
+  hash1[value] = true unless hash1[:a]
+end
+
+# コードを実行後の値
+puts "\n実行後の値:"
+puts "hash1: #{hash1.inspect}"
+
+hash2 = some_value2.to_hash
+unless a_value = hash2[:a]
+  large_array2.each do |value|
+    hash2[value] = true
+  end
+end
+
+# コードを実行後の値
+puts "\n実行後の値:"
+puts "hash2: #{hash2.inspect}"
+
+# hash1とhash2に対して異なる操作になっているので、この変更は冪等性がないため、不適切。
+# 実行後の値:
+# hash1: {:b=>23, :c=>10, :a=>true}
+
+# 実行後の値:
+# hash2: {:b=>true, :c=>true, :a=>true, :d=>true, :e=>true}
